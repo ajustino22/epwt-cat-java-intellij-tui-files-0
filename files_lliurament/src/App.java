@@ -4,7 +4,7 @@ public class    App {
 
     public static void main(String[] args) throws IOException{
         //Creem l'array d'estudiants:
-        Student students[] = init();
+        Student[] students = init();
 
         File file = new File("students.out");
 
@@ -14,22 +14,41 @@ public class    App {
         //de forma desordenada
         printStudents(students, message);
 
-        //TODO Guardar la llista d'estudiants al fitxer students.out
-        //TODO Torna a imprimir la llista d'estudiants
-        //però ara llegint-la del fitxer students.out
+        saveToFile(students, file);
+
+        System.out.println(readFromFile(file));
 
     }
 
-    static String readFromFile(File file) throws IOException{
-        //TODO Implementar usant FileReader
-        //No podeu usar BufferedReader
+    static String readFromFile(File file) {
+
+        try {
+            FileReader fr = new FileReader(file);
+            String contents = "";
+            int c;
+            while((c = fr.read()) != -1) {
+                contents += (char)c;
+            }
+            fr.close();
+            return contents;
+        } catch (IOException e) {
+            return "Error al leer el fichero";
+        }
+
     }
 
-    static void saveToFile(Student[] students, String message,
-                           File file, boolean append)
-            throws IOException {
-        //TODO Implementar usant FileWriter
-        //No podeu usar BufferedWriter
+    static void saveToFile(Student[] students, File file) {
+
+        try {
+            FileWriter writer = new FileWriter(file);
+            writer.write("Archivo" + "\n");
+            for (Student student : students) {
+                writer.write(student + "\n");
+            }
+            writer.close();
+        } catch (IOException e) {
+            System.out.println("Error al escribir en el fichero");
+        }
     }
 
     //Mètode que imprimeix la llista d'estudiants
@@ -58,7 +77,7 @@ public class    App {
     //Mètode que genera un array d'estudiants
     static public Student[] init() {
 
-        Student students[] = new Student[10];
+        Student[] students = new Student[10];
 
         Student s0 = new Student();
         s0.name = "Laura";

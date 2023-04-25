@@ -7,14 +7,10 @@ public class App {
 
     public static void main(String[] args) {
 
-        //Creem l'array d'estudiants:
-        Student students[] = init();
-        //TODO Heu de canviar la crida a init() per la crida a initTui()
-        //Student [] students = ... //TODO
+        Student [] students = initTui();
 
         //Imprimeix tots els estudiants
-        printStudents(students, "Llista desordenada:");
-
+        printStudents(students, "Listado de estudiantes:");
 
     }
 
@@ -33,9 +29,12 @@ public class App {
         sb.append("\n**** ");
         sb.append(message);
         sb.append("\n");
+        int i = 1;
         for(Student s : students){
+            sb.append("---- Student number " + i + " ----\n");
             sb.append(s.toString());
             sb.append("\n");
+            i++;
         }
         return sb.toString();
     }
@@ -46,102 +45,62 @@ public class App {
         Student students[] = new Student[0];
 
         //Ara, hem de preguntar quants estudiants volem tenir
-        //Scanner in = ...
+        Scanner in = new Scanner(System.in);
+        System.out.println("Cuantos estudiantes??");
+        String numberOfStudentsStr = in.nextLine();
 
-        System.out.print("Number of students: ");
-        //TODO
+        int numberOfStudents = stringToInt(numberOfStudentsStr);
 
-        //System.out.println("Number of students is: " + //TODO );
-
-        //int numberOfStudents = stringToInt(numberOfStudentsStr);
+        System.out.println("Number of students is: " + numberOfStudents);
 
         //Si el número d'estudiants és més gran que 0
         //preguntarem el nom, edat i subjects de cada estudiant
-        //if(numberOfStudents > 0) {
+        if(numberOfStudents > 0) {
 
-//            students = new Student[numberOfStudents];
-//            Student newStudent;
+            students = new Student[numberOfStudents];
 
-//            for(int i = 0; i < numberOfStudents; i++){
 
-              //TODO - Anar preguntant els valors (name, age,...) per a cada estudiant
+            for(int i = 0; i < numberOfStudents; i++){
+
+                Student newStudent = new Student();
+
+                System.out.println("Introduce nombre:");
+                newStudent.name = in.nextLine();
+
+                int age = -1;
+                boolean validAge = false;
+                while (!validAge) {
+                    System.out.println("Introduce edad:");
+                        age = stringToInt(in.nextLine());
+                        if (age > 0 && age < 100) {
+                            validAge = true;
+                        } else {
+                            System.out.println("La edad debe estar entre 1 y 99");
+                        }
+                }
+                newStudent.age = age;
+
+                int subjects = -1;
+                boolean validSubjects = false;
+                while (!validSubjects) {
+                    System.out.println("Introduce numero de asignaturas matriculadas:");
+                    subjects = stringToInt(in.nextLine());
+                    if (subjects > 0 && subjects < 10) {
+                        validSubjects = true;
+                    } else {
+                        System.out.println("Mínimo 1 asignatura, máximo 9");
+                    }
+                }
+                newStudent.amountOfEnrolledSubjects = subjects;
 
                 //Fiquem l'estudiant a l'array
-                //students[i] = newStudent;
-            //}
-        //}
-        //in.close();
-        return students;
-    }
-
-
-
-    //Mètode que genera un array d'estudiants
-    static public Student[] init() {
-
-        Student students[] = new Student[10];
-
-        Student s0 = new Student();
-        s0.name = "Laura";
-        s0.age = 25;
-        s0.amountOfEnrolledSubjects = 6;
-        students[0] = s0;
-
-        Student s1 = new Student();
-        s1.name = "Joan";
-        s1.age = 29;
-        s1.amountOfEnrolledSubjects = 7;
-        students[1] = s1;
-
-        Student s2 = new Student();
-        s2.name = "Carme";
-        s2.age = 38;
-        s2.amountOfEnrolledSubjects = 4;
-        students[2] = s2;
-
-        Student s3 = new Student();
-        s3.name = "Oriol";
-        s3.age = 21;
-        s3.amountOfEnrolledSubjects = 9;
-        students[3] = s3;
-
-        Student s4 = new Student();
-        s4.name = "Sergi";
-        s4.age = 36;
-        s4.amountOfEnrolledSubjects = 7;
-        students[4] = s4;
-
-        Student s5 = new Student();
-        s5.name = "Laia";
-        s5.age = 31;
-        s5.amountOfEnrolledSubjects = 5;
-        students[5] = s5;
-
-        Student s6 = new Student();
-        s6.name = "Abril";
-        s6.age = 41;
-        s6.amountOfEnrolledSubjects = 4;
-        students[6] = s6;
-
-        Student s7 = new Student();
-        s7.name = "Jordi";
-        s7.age = 30;
-        s7.amountOfEnrolledSubjects = 7;
-        students[7] = s7;
-
-        Student s8 = new Student();
-        s8.name = "Carla";
-        s8.age = 32;
-        s8.amountOfEnrolledSubjects = 6;
-        students[8] = s8;
-
-        Student s9 = new Student();
-        s9.name = "Ritxi";
-        s9.age = 28;
-        s9.amountOfEnrolledSubjects = 3;
-        students[9] = s9;
-
+                students[i] = newStudent;
+            }
+        }
+        in.close();
         return students;
     }
 }
+
+
 
